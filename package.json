@@ -1,0 +1,39 @@
+{
+  "name": "kanopt-monorepo",
+  "version": "1.0.0",
+  "description": "Agentic Kanban Sprint Optimizer - Event-sourced Kanban with AI agent",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:ai\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && go run main.go",
+    "dev:ai": "cd ai-service && python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000",
+    "dev:agent": "cd backend && go run cmd/agent/main.go",
+    "build": "npm run build:frontend && npm run build:backend && npm run build:ai",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && go build -o bin/api main.go && go build -o bin/agent cmd/agent/main.go",
+    "build:ai": "cd ai-service && pip install -r requirements.txt",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "migrate": "cd backend && go run migrate.go",
+    "seed": "cd backend && go run seed.go",
+    "test": "npm run test:frontend && npm run test:backend && npm run test:ai",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && go test ./...",
+    "test:ai": "cd ai-service && python -m pytest",
+    "clean": "docker-compose down -v && docker system prune -f",
+    "setup": "npm install && cd frontend && npm install && cd ../backend && go mod tidy && cd ../ai-service && pip install -r requirements.txt"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

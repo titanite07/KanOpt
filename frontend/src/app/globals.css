@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --foreground-rgb: 255, 255, 255;
+      --background-start-rgb: 0, 0, 0;
+      --background-end-rgb: 0, 0, 0;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgb(var(--background-end-rgb))
+      )
+      rgb(var(--background-start-rgb));
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-card border border-gray-200 transition-all duration-200;
+  }
+  
+  .card:hover {
+    @apply shadow-card-hover;
+  }
+  
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500;
+  }
+  
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+  
+  .input {
+    @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500;
+  }
+  
+  .risk-overlay {
+    @apply absolute inset-0 pointer-events-none;
+  }
+  
+  .risk-low {
+    @apply bg-risk-low/20;
+  }
+  
+  .risk-medium {
+    @apply bg-risk-medium/20;
+  }
+  
+  .risk-high {
+    @apply bg-risk-high/20;
+  }
+  
+  .risk-critical {
+    @apply bg-risk-critical/20;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .drag-preview {
+    @apply transform rotate-2 scale-105 opacity-80;
+  }
+  
+  .drop-zone {
+    @apply ring-2 ring-primary-400 ring-opacity-50 bg-primary-50;
+  }
+  
+  /* Layout utilities for preventing overlaps */
+  .sidebar-panel {
+    @apply absolute right-0 top-0 bottom-0 bg-white border-l border-gray-200 shadow-lg;
+    z-index: 30;
+  }
+  
+  .main-header {
+    z-index: 50;
+  }
+  
+  .control-bar {
+    z-index: 40;
+  }
+  
+  .kanban-content {
+    z-index: 10;
+  }
+  
+  .loading-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+}
